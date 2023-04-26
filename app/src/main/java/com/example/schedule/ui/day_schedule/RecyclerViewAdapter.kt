@@ -13,9 +13,9 @@ class RecyclerViewAdapter: RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder
 
         fun bind(dogData:DogData){
             //binding.dogPhotoImg.=dogData.dog_img
-            binding.dogBreedTv.text=dogData.dog_name
-            binding.dogAgeTv.text= dogData.dog_age.toString()
-            binding.dogGenderTv.text=dogData.dog_gender
+            binding.dogBreedTv.text = dogData.dog_name
+            binding.dogAgeTv.text = dogData.dog_age.toString()
+            binding.dogGenderTv.text = dogData.dog_gender
         }
     }
 
@@ -26,7 +26,7 @@ class RecyclerViewAdapter: RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder
         return MyViewHolder(binding)
     }
 
-    override fun getItemCount(): Int =datalist.size
+    override fun getItemCount(): Int = datalist.size
 
     //recyclerview가 viewholder를 가져와 데이터 연결할때 호출
     //적절한 데이터를 가져와서 그 데이터를 사용하여 뷰홀더의 레이아웃 채움

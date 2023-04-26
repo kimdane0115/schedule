@@ -10,24 +10,14 @@ class DaySchViewModel : ViewModel() {
         value = "Day Schedule"
     }
     val text: LiveData<String> = _text
-    val mDatas = mutableListOf<DogData>()
+    val mListDatas = mutableListOf<DaySchData>()
 
-    fun initializelist() : List<DogData> { //임의로 데이터 넣어서 만들어봄
-        with(mDatas){
-            add(DogData("","dog1",20,"M"))
-            add(DogData("","dog2",20,"M"))
-            add(DogData("","dog3",20,"M"))
-            add(DogData("","dog4",20,"M"))
-            add(DogData("","dog5",20,"M"))
-            add(DogData("","dog2",20,"M"))
-            add(DogData("","dog6",20,"M"))
-            add(DogData("","dog7",20,"M"))
-            add(DogData("","dog8",20,"M"))
-            add(DogData("","dog9",20,"M"))
-            add(DogData("","dog10",20,"M"))
-            add(DogData("","dog11",20,"M"))
-            add(DogData("","dog12",20,"M"))
+    fun initList() : List<DaySchData> {
+        with(mListDatas) {
+            add(DaySchData("오전 10 시 30 분", "오전 11 시 00 분"))
+            add(DaySchData("오전 11 시 30 분", "오후 12 시 00 분"))
+            add(DaySchData("오후 12 시 30 분", "오후 01 시 00 분"))
         }
-        return mDatas
+        return mListDatas
     }
 }
