@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.schedule.databinding.FragmentDayschBinding
 
 class DaySchFragment : Fragment() {
@@ -17,23 +18,33 @@ class DaySchFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val galleryViewModel =
+//        initDogRecyclerView()
+        val daySchViewModel =
             ViewModelProvider(this).get(DaySchViewModel::class.java)
 
         _binding = FragmentDayschBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textGallery
-        galleryViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        val adapter = RecyclerViewAdapter()
+        adapter.datalist = daySchViewModel.initializelist() as MutableList<DogData>;
+        _binding!!.recyclerView.adapter = adapter
+        binding!!.recyclerView.layoutManager = LinearLayoutManager(context)
+
         return root
     }
+
+//    fun initDogRecyclerView(){
+//        val adapter=RecyclerViewAdapter() //어댑터 객체 만듦
+//        adapter.datalist=mDatas //데이터 넣어줌
+//        binding.recyclerView.adapter=adapter //리사이클러뷰에 어댑터 연결
+//        binding.recyclerView.layoutManager= LinearLayoutManager(context) //레이아웃 매니저 연결
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()
