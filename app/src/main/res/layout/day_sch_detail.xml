@@ -5,59 +5,53 @@
     android:layout_height="80dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-    <TextView
-        android:id="@+id/start_time"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="운행 시작 :"
-        app:layout_constraintBottom_toTopOf="@+id/separator1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="0.2dp"
-        android:id="@+id/separator1"
-        android:visibility="visible"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintBottom_toTopOf="@+id/arrive_time"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/start_time"
-        tools:ignore="MissingConstraints" />
-    <TextView
-        android:id="@+id/arrive_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="학원 도착"
-        app:layout_constraintBottom_toTopOf="@+id/separator2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/separator1" />
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="0.2dp"
-        android:id="@+id/separator2"
-        android:visibility="visible"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintBottom_toTopOf="@+id/drive_start"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/arrive_time"
-        tools:ignore="MissingConstraints" />
-    <TextView
-        android:id="@+id/drive_start"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="운행 시작"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/arrive_time" />
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:background="@drawable/textview_border"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="엘로파크 정문" />
+
+            <TextView
+                android:background="@drawable/textview_border"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="도착: 오전 10시 30분 \n출발: 오전 10시 35분" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:background="@drawable/textview_border"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="도착 완료" />
+
+            <TextView
+                android:background="@drawable/textview_border"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="출발 완료" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

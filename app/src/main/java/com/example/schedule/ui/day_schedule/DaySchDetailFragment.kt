@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.schedule.MainActivity
 import com.example.schedule.databinding.FragmentDayschDetailBinding
 
 class DaySchDetailFragment : Fragment() {
@@ -22,13 +23,14 @@ class DaySchDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        (activity as MainActivity).supportActionBar?.hide()
         val daySchDetailViewModel =
             ViewModelProvider(this).get(DaySchDetailViewModel::class.java)
 
         _binding = FragmentDayschDetailBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
+        val textView: TextView = binding.date
         daySchDetailViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }

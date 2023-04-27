@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 
 class DaySchDetailViewModel : ViewModel() {
     private val _text = MutableLiveData<String>().apply {
-        value = "Detail Schedule"
+        value = "오전 10시 30분 -> 오전 11시 00분"
     }
     val text: LiveData<String> = _text
 }

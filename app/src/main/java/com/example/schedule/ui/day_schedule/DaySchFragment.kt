@@ -1,20 +1,23 @@
 package com.example.schedule.ui.day_schedule
 
-import android.R
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 import com.example.schedule.MainActivity
+import com.example.schedule.R
+import com.example.schedule.common.ScheduleData
 import com.example.schedule.databinding.FragmentDayschBinding
+import kotlin.math.abs
 
 
 class DaySchFragment : Fragment() {
@@ -32,8 +35,8 @@ class DaySchFragment : Fragment() {
     ): View {
 //        initDogRecyclerView()
         val mActivity = activity as MainActivity
-        val daySchViewModel =
-            ViewModelProvider(this).get(DaySchViewModel::class.java)
+        mActivity.supportActionBar?.show()
+        val daySchViewModel = ViewModelProvider(this).get(DaySchViewModel::class.java)
 
         _binding = FragmentDayschBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -44,20 +47,44 @@ class DaySchFragment : Fragment() {
 //        binding!!.recyclerView.layoutManager = LinearLayoutManager(context)
 
         val adapter = DaySchViewAdapter()
-        adapter.datalist = daySchViewModel.initList() as MutableList<DaySchData>
+//        adapter.datalist = daySchViewModel.initList() as MutableList<DaySchData>
+        adapter.schlist = daySchViewModel.getList()
+//        adapter.datalist = daySchViewModel.getList()
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
         binding.recyclerView.addOnItemTouchListener(object : OnItemTouchListener {
+            private var touchDownX = 0f
+            private var touchDownY = 0f
+            private var isTap = true
+
             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                val child = rv.findChildViewUnder(e.x, e.y)
-                val position = rv.getChildAdapterPosition(child!!)
-                Log.d("position", "[$position]")
-                mActivity.goToDaySchDetail()
+                when (e.actionMasked) {
+                    MotionEvent.ACTION_MOVE -> {
+                        if (isTap && (abs(e.x - touchDownX) > 10 || abs(e.y - touchDownY) > 10)) {
+                            isTap = false
+                            rv.stopScroll()
+                        }
+                    }
+                    MotionEvent.ACTION_DOWN -> {
+                        touchDownX = e.x
+                        touchDownY = e.y
+                        isTap = true
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        if (isTap) {
+                            // 아이템 클릭 이벤트를 취소합니다.
+                            mActivity.goToDaySchDetail()
+                            return true
+                        }
+                    }
+                }
                 return false
             }
 
-            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
+                Log.d("testkimdw", "onTouchEvent")
+            }
             override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
         })
         return root
