@@ -52,10 +52,9 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
     }
 
-    fun goToDaySchDetail() {
-//        val bundle = bundleOf("amount" to String)
-//        navController.navigate(R.id.nav_home_detail, bundle)
-        navController.navigate(R.id.nav_home_detail)
+    fun goToDaySchDetail(idx : Long) {
+        val bundle = Bundle().apply { putLong("idx", idx) }
+        navController.navigate(R.id.nav_home_detail, bundle)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

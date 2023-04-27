@@ -19,7 +19,6 @@ import com.example.schedule.common.ScheduleData
 import com.example.schedule.databinding.FragmentDayschBinding
 import kotlin.math.abs
 
-
 class DaySchFragment : Fragment() {
 
     private var _binding: FragmentDayschBinding? = null
@@ -74,7 +73,12 @@ class DaySchFragment : Fragment() {
                     MotionEvent.ACTION_UP -> {
                         if (isTap) {
                             // 아이템 클릭 이벤트를 취소합니다.
-                            mActivity.goToDaySchDetail()
+                            val child = rv.findChildViewUnder(e.x, e.y)
+                            val position = rv.getChildAdapterPosition(child!!)
+                            Log.d("position", "[$position]")
+                            Log.d("testkimdw", "item : ${adapter.schlist[position].date}")
+                            Log.d("testkimdw", "item : ${adapter.schlist[position].startTime} -> ${adapter.schlist[position].endTime}")
+                            mActivity.goToDaySchDetail(adapter.schlist[position].sortIdx)
                             return true
                         }
                     }
@@ -82,9 +86,7 @@ class DaySchFragment : Fragment() {
                 return false
             }
 
-            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
-                Log.d("testkimdw", "onTouchEvent")
-            }
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
             override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
         })
         return root

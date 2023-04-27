@@ -1,6 +1,7 @@
 package com.example.schedule.ui.day_schedule
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,8 @@ class DaySchDetailFragment : Fragment() {
         val daySchDetailViewModel =
             ViewModelProvider(this).get(DaySchDetailViewModel::class.java)
 
+//        Log.d("testkimdw", "receive String : ${arguments?.getString("data")?.let { text -> Log.d("testkimdw", "text : ${text}") }}")
+        Log.d("testkimdw", "receive idx : ${arguments?.getLong("idx")}")
         _binding = FragmentDayschDetailBinding.inflate(inflater, container, false)
         val root: View = binding.root
 

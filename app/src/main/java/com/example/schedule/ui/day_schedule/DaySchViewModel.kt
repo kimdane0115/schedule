@@ -13,22 +13,20 @@ class DaySchViewModel : ViewModel() {
         value = "Day Schedule"
     }
     val text: LiveData<String> = _text
-    val mListDatas = mutableListOf<DaySchData>()
-    val mSchDatas = mutableListOf<ScheduleData>()
+//    val mSchDatas = mutableListOf<ScheduleData>()
 
-    fun initList() : List<DaySchData> {
-//        Log.d("testkimdw", "size: ${ScheduleDataList.instance.scheduleDataList.size}")
-        with(mListDatas) {
-            add(DaySchData("오전 10 시 30 분", "오전 11 시 00 분"))
-            add(DaySchData("오전 11 시 30 분", "오후 12 시 00 분"))
-            add(DaySchData("오후 12 시 30 분", "오후 01 시 00 분"))
-        }
-        return mListDatas
-    }
-
-    fun getList() : MutableList<ScheduleData> {
+    fun getList(): MutableList<ScheduleData> {
         Log.d("testkimdw", "size: ${ScheduleDataList.instance.scheduleDataList.size}")
-//        return mSchDatas
+//        for (el: ScheduleData in ScheduleDataList.instance.scheduleDataList) {
+//            for (map in el.stationMap) {
+//                Log.d("testkimdw", "key : ${map.key}")
+//                for (value in map.value) {
+//                    Log.d("testkimdw", "item : ${value.time}")
+//                    Log.d("testkimdw", "item : ${value.name}")
+//                }
+//            }
+//        }
+
         return ScheduleDataList.instance.scheduleDataList
     }
 }

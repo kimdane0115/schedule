@@ -49,7 +49,7 @@ class JsonReader {
                 stationData.time = time
                 stationList.add(stationData)
             }
-            stationMap[stationMapKey] = stationList
+            stationMap[stationMapKey] = stationList.toMutableList().apply { sortBy { it.index } }
 //            schData.stationList = stationList
             schData.stationMap = stationMap
 //            Log.d("testkimdw", "stationList size : ${schData.stationMap.size}")
@@ -61,17 +61,6 @@ class JsonReader {
         schDataListInstance.scheduleDataList = schList.toMutableList().apply { sortBy { it.sortIdx } }
 
         Log.d("testkimdw", "jsonParser size : ${schDataListInstance.scheduleDataList.size}")
-
-//        for (el : ScheduleData in schDataListInstance.scheduleDataList) {
-//            for (map in el.stationMap) {
-//                Log.d("testkimdw", "key : ${map.key}")
-//                for (value in map.value) {
-//                    Log.d("testkimdw", "item : ${value.time}")
-//                    Log.d("testkimdw", "item : ${value.name}")
-//                }
-//            }
-//        }
-
 //        Log.d("testkimdw", "jsonParser station size : ${schDataListInstance.scheduleDataList[0].stationList.size}")
     }
 }
