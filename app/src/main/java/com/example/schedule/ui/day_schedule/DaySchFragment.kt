@@ -75,9 +75,9 @@ class DaySchFragment : Fragment() {
                             // 아이템 클릭 이벤트를 취소합니다.
                             val child = rv.findChildViewUnder(e.x, e.y)
                             val position = rv.getChildAdapterPosition(child!!)
-                            Log.d("position", "[$position]")
-                            Log.d("testkimdw", "item : ${adapter.schlist[position].date}")
-                            Log.d("testkimdw", "item : ${adapter.schlist[position].startTime} -> ${adapter.schlist[position].endTime}")
+//                            Log.d("position", "[$position]")
+//                            Log.d("testkimdw", "item : ${adapter.schlist[position].date}")
+//                            Log.d("testkimdw", "item : ${adapter.schlist[position].startTime} -> ${adapter.schlist[position].endTime}")
                             mActivity.goToDaySchDetail(adapter.schlist[position].sortIdx)
                             return true
                         }

@@ -1,5 +1,6 @@
-package com.example.schedule.ui.day_schedule
+package com.example.schedule.ui.day_schedule.detail
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,8 +9,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.schedule.MainActivity
+import com.example.schedule.common.ScheduleDataList
 import com.example.schedule.databinding.FragmentDayschDetailBinding
+import com.example.schedule.ui.day_schedule.DaySchViewAdapter
 
 class DaySchDetailFragment : Fragment() {
 
@@ -19,6 +23,7 @@ class DaySchDetailFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,15 +33,28 @@ class DaySchDetailFragment : Fragment() {
         val daySchDetailViewModel =
             ViewModelProvider(this).get(DaySchDetailViewModel::class.java)
 
+        var sortIdx = arguments?.getLong("idx")
 //        Log.d("testkimdw", "receive String : ${arguments?.getString("data")?.let { text -> Log.d("testkimdw", "text : ${text}") }}")
-        Log.d("testkimdw", "receive idx : ${arguments?.getLong("idx")}")
         _binding = FragmentDayschDetailBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.date
-        daySchDetailViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        val schDataListInstance = ScheduleDataList.instance
+        for (item in schDataListInstance.scheduleDataList) {
+            if (sortIdx == item.sortIdx) {
+                Log.d("testkimdw", "startTime : ${item.startTime}")
+                Log.d("testkimdw", "endTime : ${item.endTime}")
+                binding.date.text = item.startTime +" -> " +item.endTime
+                for (map in item.stationMap) {
+                    Log.d("testkimdw", "map size : ${map.value.size}")
+                }
+                break;
+            }
         }
+
+        val adapter = DaySchDetailViewAdapter()
+        adapter.stationlist = daySchDetailViewModel.getList(sortIdx!!)
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(context)
         return root
     }
 
