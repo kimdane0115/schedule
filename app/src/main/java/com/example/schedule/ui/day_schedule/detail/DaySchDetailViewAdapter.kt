@@ -1,33 +1,76 @@
 package com.example.schedule.ui.day_schedule.detail
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.schedule.common.Station
+import com.example.schedule.common.database.AppDatabase
+import com.example.schedule.common.database.StationData
 import com.example.schedule.databinding.DaySchDetailBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class DaySchDetailViewAdapter: RecyclerView.Adapter<DaySchDetailViewAdapter.MyViewHolder>() {
+class DaySchDetailViewAdapter(private val context: Context): RecyclerView.Adapter<DaySchDetailViewAdapter.MyViewHolder>() {
 
-//    var datalist = mutableListOf<DaySchData>()//리사이클러뷰에서 사용할 데이터 미리 정의 -> 나중에 MainActivity등에서 datalist에 실제 데이터 추가
     var stationlist = mutableListOf<Station>()//리사이클러뷰에서 사용할 데이터 미리 정의 -> 나중에 MainActivity등에서 datalist에 실제 데이터 추가
     private var preDate: String = ""
     inner class MyViewHolder(private val binding: DaySchDetailBinding): RecyclerView.ViewHolder(binding.root) {
 
-//        fun bind(schData : DaySchData){
-//            binding.startTime.text = "운행 시간 : " +schData.drive_startTime
-//            binding.arriveTime.text = "도착 시간 : " +schData.school_arriveTime
-//        }
-
+        @SuppressLint("SetTextI18n")
         fun bind(station: Station) {
-//            binding.date.text = schData.date
-//            if (schData.driveStart.isEmpty())
-//                binding.driveStart.setBackgroundColor(Color.parseColor("#FFFFFF"))
-//            binding.driveStart.text = schData.driveStart
-//            binding.startTime.text = "운행 시작 : " + schData.startTime
-//            binding.arriveTime.text = "도착 시간 : " + schData.endTime
-//            preDate = schData.date
 
             binding.name.text = station.name
+
+//            var stationData = StationData(station.arriveTime, "", station.name)
+            CoroutineScope(Dispatchers.IO).launch {
+                var stationData = AppDatabase.getInstance(context)?.stationDao()?.getStationArriveTime(station.arriveTime)
+                if (stationData != null) {
+                    binding.name.text = stationData.name
+                    if (!stationData.arriveTime.isEmpty()) {
+                        binding.arriveTime.text = "도착 : ${stationData.arriveTime}"
+//                        binding.btnArrive.isEnabled = false
+                        binding.btnArrive.text = "도착 완료"
+                        binding.btnArrive.setBackgroundColor(Color.GRAY)
+                    }
+                    if (!stationData.startTime.isEmpty()) {
+                        binding.startTime.text = "출발 : ${stationData.startTime}"
+//                        binding.btnArrive.isEnabled = false
+                        binding.btnStart.text = "출발 완료"
+//                        binding.btnStart.setBackgroundColor(Color.GRAY)
+                    }
+
+                    Log.d("testkimdw", "stationData : ${stationData.arriveTime}")
+                }
+            }
+
+            binding.btnArrive.setOnClickListener { view ->
+                binding.btnArrive.text = "도착 완료"
+                binding.arriveTime.text = "도착 : ${station.arriveTime}"
+                var stationData = StationData(station.arriveTime, "", station.name)
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    val db = AppDatabase.getInstance(context)
+                    db?.stationDao()?.insert(stationData)
+                    Log.d("testkimdw", "insert Success!!!")
+                }
+            }
+            binding.btnStart.setOnClickListener { view ->
+                binding.btnStart.text = "출발 완료"
+                binding.startTime.text = "출발 : ${station.startTime}"
+
+                var stationData = StationData(station.arriveTime, station.startTime, station.name)
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    val db = AppDatabase.getInstance(context)
+                    db?.stationDao()?.update(stationData)
+                    Log.d("testkimdw", "update Success!!!")
+                }
+            }
         }
     }
 

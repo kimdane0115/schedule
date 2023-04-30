@@ -51,10 +51,11 @@ class DaySchDetailFragment : Fragment() {
             }
         }
 
-        val adapter = DaySchDetailViewAdapter()
-        adapter.stationlist = daySchDetailViewModel.getList(sortIdx!!)
+        val adapter = DaySchDetailViewAdapter((activity as MainActivity).applicationContext)
+        adapter.stationlist = daySchDetailViewModel.getList((activity as MainActivity).applicationContext, sortIdx!!)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
+
         return root
     }
 

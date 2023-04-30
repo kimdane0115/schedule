@@ -24,13 +24,26 @@
                 android:layout_weight="1"
                 android:text="엘로파크 정문" />
 
-            <TextView
-                android:id="@+id/time"
-                android:background="@drawable/textview_border"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="도착: 오전 10시 30분 \n출발: 오전 10시 35분" />
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/arrive_time"
+                    android:background="@drawable/textview_border"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="" />
+                <TextView
+                    android:id="@+id/start_time"
+                    android:background="@drawable/textview_border"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    app:layout_constraintTop_toBottomOf="@+id/arrive_time"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -38,19 +51,21 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
+            <Button
+                android:id="@+id/btn_arrive"
                 android:background="@drawable/textview_border"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="도착 완료" />
+                android:text="도착" />
 
-            <TextView
+            <Button
+                android:id="@+id/btn_start"
                 android:background="@drawable/textview_border"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="출발 완료" />
+                android:text="출발" />
         </LinearLayout>
 
     </LinearLayout>

@@ -17,6 +17,7 @@ import com.example.schedule.MainActivity
 import com.example.schedule.R
 import com.example.schedule.common.ScheduleData
 import com.example.schedule.databinding.FragmentDayschBinding
+import kotlinx.coroutines.*
 import kotlin.math.abs
 
 class DaySchFragment : Fragment() {
@@ -26,13 +27,12 @@ class DaySchFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
+    private var timerJob: Job? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        initDogRecyclerView()
         val mActivity = activity as MainActivity
         mActivity.supportActionBar?.show()
         val daySchViewModel = ViewModelProvider(this).get(DaySchViewModel::class.java)
@@ -75,9 +75,6 @@ class DaySchFragment : Fragment() {
                             // 아이템 클릭 이벤트를 취소합니다.
                             val child = rv.findChildViewUnder(e.x, e.y)
                             val position = rv.getChildAdapterPosition(child!!)
-//                            Log.d("position", "[$position]")
-//                            Log.d("testkimdw", "item : ${adapter.schlist[position].date}")
-//                            Log.d("testkimdw", "item : ${adapter.schlist[position].startTime} -> ${adapter.schlist[position].endTime}")
                             mActivity.goToDaySchDetail(adapter.schlist[position].sortIdx)
                             return true
                         }
@@ -89,15 +86,9 @@ class DaySchFragment : Fragment() {
             override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
             override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
         })
+
         return root
     }
-
-//    fun initDogRecyclerView(){
-//        val adapter=RecyclerViewAdapter() //어댑터 객체 만듦
-//        adapter.datalist=mDatas //데이터 넣어줌
-//        binding.recyclerView.adapter=adapter //리사이클러뷰에 어댑터 연결
-//        binding.recyclerView.layoutManager= LinearLayoutManager(context) //레이아웃 매니저 연결
-//    }
 
     override fun onDestroyView() {
         super.onDestroyView()
